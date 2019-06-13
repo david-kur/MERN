@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const Post = require('../../models/Post');
 const { check, validationResult } = require('express-validator/check');
 
 // @route   GET api/profile/me
@@ -76,6 +77,7 @@ router.post(
     if (facebook) profileFields.social.facebook = facebook;
     if (twitter) profileFields.social.twitter = twitter;
     if (instagram) profileFields.social.instagram = instagram;
+    if (linkedin) profileFields.social.linkedin = linkedin;
 
     //Create or update profile
     try {
@@ -135,6 +137,7 @@ router.get('/user/:id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
+    await Post.deleteMany({ user: req.user.id });
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ user: req.user.id });
     res.json({ msg: 'User deleted' });
