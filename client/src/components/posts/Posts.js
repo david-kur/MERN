@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PostItem from './PostItem';
+import AddPost from '../forms/AddPost';
 import { getPosts } from '../../actions/post';
 
 const Posts = ({ post: { posts, loading }, getPosts }) => {
@@ -17,6 +18,8 @@ const Posts = ({ post: { posts, loading }, getPosts }) => {
       <p className="lead">
         <i className="fas fa-user" /> Welcome to posts
       </p>
+
+      <AddPost />
 
       <div className="posts">
         {posts.map(post => (
